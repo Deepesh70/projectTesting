@@ -7,7 +7,13 @@ const TodoList = ["1","2", "3"];
 http
     .createServer((require, response) => {
         const { method, url } = require;
-        console.log(method, url);
+        
+        if(url === "/TodoList"){
+            if(method === "GET"){
+                response.writeHead(200);
+                response.write(TodoList.toString());
+            }
+        }
         response.end();
     })
     .listen(port, ()  => {
