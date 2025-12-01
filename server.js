@@ -2,10 +2,12 @@ const http = require("http");
 
 const port = 8081;
 
+const TodoList = ["1","2", "3"];
+
 http
     .createServer((require, response) => {
-        response.writeHead(200, { "Content-Type": "text/html"});
-        response.write("<h1>Hello World</h1>");
+        const { method, url } = require;
+        console.log(method, url);
         response.end();
     })
     .listen(port, ()  => {
