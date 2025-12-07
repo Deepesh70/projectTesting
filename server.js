@@ -14,6 +14,17 @@ http
                 response.write(TodoList.toString());
             } else if(method === "POST"){
                 let body = '';
+                request.on('error',() => {
+                    console.error(error);
+                })
+                request.on("data",(chunk) => {
+                    body= body + chunk;
+                    console.log(chunk);
+                })
+                request.on("end", () => {
+                    body = JSON.parse(body);
+                    console.log("Data: ", body);
+                });
             }
             else{
                 response.writeHead(404);
