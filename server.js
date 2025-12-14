@@ -12,32 +12,33 @@ http
             if(method === "GET"){
                 response.writeHead(200,{"Content-Type": "text/html"});
                 response.write(TodoList.toString());
+                response.end();
             } else if(method === "POST"){
                 let body = '';
-                request.on('error',() => {
+                request.on('error',(error) => { 
                     console.error(error);
                 })
                 request.on("data",(chunk) => {
                     body= body + chunk;
-                    console.log(chunk);
                 })
                 request.on("end", () => {
                     body = JSON.parse(body);
-                    let newToDo = TodoList;
-                     newToDo.push(body.item);
-                     console.log(newToDo)
-                     response.writeHead(201);
+                    console.log("Received:", body);
+                    TodoList.push(body.item);
+                    console.log("TodoList:", TodoList);
+                    response.writeHead(201);
+                    response.end();
                 });
             }
             else{
                 response.writeHead(404);
+                response.end();
             }
         }
         else{
-            response.writeHead(404);    
+            response.writeHead(404);
+            response.end();    
         }
-
-        response.end();
     })
     .listen(port, () => {
         console.log(`Server is running on port http://localhost:${port}`);
