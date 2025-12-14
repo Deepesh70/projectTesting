@@ -23,7 +23,10 @@ http
                 })
                 request.on("end", () => {
                     body = JSON.parse(body);
-                    console.log("Data: ", body);
+                    let newToDo = TodoList;
+                     newToDo.push(body.item);
+                     console.log(newToDo)
+                     response.writeHead(201);
                 });
             }
             else{
