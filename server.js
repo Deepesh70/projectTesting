@@ -20,7 +20,7 @@ http
                 })
                 request.on("data",(chunk) => {
                     body= body + chunk;
-                })
+                })  
                 request.on("end", () => {
                     body = JSON.parse(body);
                     console.log("Received:", body);
@@ -29,6 +29,34 @@ http
                     response.writeHead(201);
                     response.end();
                 });
+            }
+            else if(method === "DELETE"){
+                let body = '';  
+                request.on('error',(error) => {
+                    console.log(error);
+                })
+                request.on("data", (chunk) => {
+                    body = body + chunk;
+                })
+                request.on("end", () => {
+                    body = JSON.parse(body);
+                    let deleteThis = body.item;
+                    // let s = TodoList.length;
+                    // console.log(s);
+                    // for(let i=0; i< TodoList.length; i++){
+                    //     if(TodoList[i] === deleteThis ){
+                    //         TodoList.splice(i, 1);
+                    //         break;
+                    //     }
+                    // }
+
+                    TodoList.find((element, index) => {
+                        if( element === deleteThis ){
+                            TodoList.splice(index, 1);
+                        }
+                    });
+                    response.writeHead(204);
+                })
             }
             else{
                 response.writeHead(404);
